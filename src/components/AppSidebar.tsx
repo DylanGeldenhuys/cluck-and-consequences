@@ -34,15 +34,14 @@ export function AppSidebar() {
     <Sidebar className="border-r border-border glass-panel">
       <div className="p-4 border-b border-border">
         <NavLink to="/">
-          <Button
-            variant="ghost"
-            className="w-full justify-center hover:bg-primary/10 border-2 border-primary/30 hover:border-primary transition-all"
+          <div
+            className="w-full py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-primary/10 border-2 border-primary hover:border-primary bg-primary/5 transition-all cursor-pointer group"
           >
-            <span className={`font-bold text-primary text-lg ${isCollapsed ? "hidden" : ""}`}>
+            <span className={`font-bold text-primary text-xl tracking-wider ${isCollapsed ? "hidden" : ""}`}>
               OptiBroiler
             </span>
-            {isCollapsed && <span className="font-bold text-primary text-xl">OB</span>}
-          </Button>
+            {isCollapsed && <span className="font-bold text-primary text-2xl">OB</span>}
+          </div>
         </NavLink>
       </div>
 
