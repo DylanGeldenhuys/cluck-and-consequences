@@ -61,3 +61,10 @@ export function getHouseWeeklyMetrics(id: string): WeeklyMetrics[] {
 export function getHouseAnomalies(id: string): Anomaly[] {
   return getAppState().anomalies.get(id) || [];
 }
+
+export function getModelRunDate(house: House): Date {
+  const currentWeek = Math.ceil(house.currentDay / 7);
+  const modelRunDate = new Date(house.cycleStartDate);
+  modelRunDate.setDate(modelRunDate.getDate() + ((currentWeek - 1) * 7));
+  return modelRunDate;
+}

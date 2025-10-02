@@ -6,9 +6,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { KpiCard } from '@/components/KpiCard';
 import { AnomalyTimeline } from '@/components/AnomalyTimeline';
-import { EnvironmentalCharts } from '@/components/EnvironmentalCharts';
-import { AdvisoryPanel } from '@/components/AdvisoryPanel';
-import { getHouse, getHouseTelemetry, getHouseWeeklyMetrics, getHouseAnomalies } from '@/lib/mock/state';
+import { EnvironmentalCharts } from '@/components/EnvironmentalChartsNew';
+import { AdvisoryPanel } from '@/components/AdvisoryPanelNew';
+import { getHouse, getHouseTelemetry, getHouseWeeklyMetrics, getHouseAnomalies, getModelRunDate } from '@/lib/mock/state';
 
 export default function HouseDetail() {
   const { id } = useParams<{ id: string }>();
@@ -33,6 +33,7 @@ export default function HouseDetail() {
   const currentWeek = Math.ceil(house.currentDay / 7);
   const currentMetrics = weeklyMetrics.find(m => m.week === currentWeek);
   const profitImprovement = ((1 + currentWeek * 0.03) - 1) * 100;
+  const modelRunDate = getModelRunDate(house);
 
   return (
     <div className="min-h-screen bg-background">
@@ -50,7 +51,7 @@ export default function HouseDetail() {
                   <h1 className="text-2xl font-bold">{house.name}</h1>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Day {house.currentDay} • {house.currentBirds.toLocaleString()} birds • {house.floorArea} m²
+                  {house.currentBirds.toLocaleString()} birds • {house.floorArea} m² • Day {house.currentDay} • Week {currentWeek} • Model last run: {modelRunDate.toLocaleDateString()}
                 </p>
               </div>
             </div>
@@ -99,7 +100,7 @@ export default function HouseDetail() {
 
           <TabsContent value="operations" className="space-y-6">
             <AnomalyTimeline anomalies={anomalies} />
-            <EnvironmentalCharts telemetry={telemetry} />
+            <EnvironmentalCharts telemetry={telemetry} initialBirds={house.capacity} />
           </TabsContent>
 
           <TabsContent value="advisory">

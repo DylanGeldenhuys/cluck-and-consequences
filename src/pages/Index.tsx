@@ -37,20 +37,17 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border glass-panel">
-        <div className="container mx-auto px-6 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-4xl font-bold text-gradient">Causal Poultry AI Dashboard</h1>
-              <p className="text-muted-foreground mt-2">Real-time monitoring across 10 broiler houses</p>
-            </div>
-            <Button onClick={() => navigate('/reports')} size="lg">
-              View Reports
-            </Button>
+      <div className="container mx-auto px-6 py-6">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-4xl font-bold text-gradient">OptiBroiler Dashboard</h1>
+            <p className="text-muted-foreground mt-2">Real-time monitoring across {state.houses.length} broiler houses</p>
           </div>
+          <Button onClick={() => navigate('/reports')} size="lg" className="bg-primary hover:bg-primary/90">
+            View Reports
+          </Button>
         </div>
-      </header>
+      </div>
 
       <main className="container mx-auto px-6 py-8">
         {/* KPI Headband */}

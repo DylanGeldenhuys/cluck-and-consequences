@@ -53,6 +53,9 @@ export function generateDoseResponse(factor: Factor, week: number, currentValue:
   const config = FACTOR_RANGES[factor];
   const optimal = config.optimal(week);
   
+  // Week-based support: early weeks have lower data support
+  const weekSupportBase = week === 1 ? 0.5 : week === 2 ? 0.6 : 0.75 + (week * 0.05);
+  
   const numPoints = 20;
   const doses: number[] = [];
   const pefUplift: number[] = [];
@@ -79,8 +82,8 @@ export function generateDoseResponse(factor: Factor, week: number, currentValue:
     ciLower.push(Number((uplift - ciWidth).toFixed(1)));
     ciUpper.push(Number((uplift + ciWidth).toFixed(1)));
 
-    // Support decreases away from optimal (Gaussian)
-    const supportVal = gaussianSupport(dose, optimal, (config.max - config.min) / 4);
+    // Support decreases away from optimal (Gaussian) + week-based variation
+    const supportVal = gaussianSupport(dose, optimal, (config.max - config.min) / 4) * weekSupportBase;
     support.push(Number(supportVal.toFixed(2)));
   }
 

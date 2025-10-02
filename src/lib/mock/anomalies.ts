@@ -110,6 +110,66 @@ export function detectAnomalies(telemetry: DailyTelemetry[]): Anomaly[] {
         suggestion: 'Inspect flock health, consult veterinarian',
       });
     }
+
+    // NEW: Coughing detected
+    if (t.coughingDetected) {
+      anomalies.push({
+        id: `${t.houseId}-d${t.day}-coughing`,
+        houseId: t.houseId,
+        day: t.day,
+        timestamp: t.timestamp,
+        metric: 'Respiratory Distress',
+        value: 1,
+        severity: 'medium',
+        message: 'AI detected coughing sounds from flock',
+        suggestion: 'Check air quality (NH₃, dust levels). Inspect ventilation system.',
+      });
+    }
+
+    // NEW: Raised volume detected
+    if (t.raisedVolumeDetected) {
+      anomalies.push({
+        id: `${t.houseId}-d${t.day}-raisedvolume`,
+        houseId: t.houseId,
+        day: t.day,
+        timestamp: t.timestamp,
+        metric: 'Stress Vocalizations',
+        value: t.chickenNoiseDb,
+        severity: 'medium',
+        message: `Elevated stress vocalizations detected (${t.chickenNoiseDb.toFixed(0)} dB)`,
+        suggestion: 'Inspect flock for health issues, check temperature and humidity comfort.',
+      });
+    }
+
+    // NEW: Poor spread
+    if (t.spreadMetric < 0.6) {
+      anomalies.push({
+        id: `${t.houseId}-d${t.day}-clustering`,
+        houseId: t.houseId,
+        day: t.day,
+        timestamp: t.timestamp,
+        metric: 'Poor Flock Distribution',
+        value: t.spreadMetric,
+        severity: 'low',
+        message: `Birds clustering unevenly (spread score: ${t.spreadMetric.toFixed(2)})`,
+        suggestion: 'Check temperature zones, ensure water and feed access is uniform.',
+      });
+    }
+
+    // NEW: Low movement
+    if (t.movementIndex < 30) {
+      anomalies.push({
+        id: `${t.houseId}-d${t.day}-lowmovement`,
+        houseId: t.houseId,
+        day: t.day,
+        timestamp: t.timestamp,
+        metric: 'Low Activity',
+        value: t.movementIndex,
+        severity: 'medium',
+        message: `Low flock activity detected (movement index: ${t.movementIndex.toFixed(0)})`,
+        suggestion: 'Assess flock health and environmental comfort. Check for illness or heat stress.',
+      });
+    }
   }
 
   return anomalies;

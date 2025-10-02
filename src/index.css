@@ -4,34 +4,35 @@
 
 @layer base {
   :root {
-    --background: 222 47% 11%;
+    --background: 222 47% 7%;
     --foreground: 210 40% 98%;
-    --card: 222 47% 11%;
+    --card: 222 47% 9%;
     --card-foreground: 210 40% 98%;
-    --popover: 222 47% 11%;
+    --popover: 222 47% 9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 199 89% 48%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 17 88% 60%;
+    --primary-foreground: 222 47% 11%;
     --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
     --muted: 215 20% 35%;
     --muted-foreground: 215 20% 65%;
-    --accent: 243 75% 59%;
+    --accent: 188 94% 43%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
     --border: 215 20% 20%;
     --input: 215 20% 20%;
-    --ring: 199 89% 48%;
+    --ring: 17 88% 60%;
     --radius: 0.5rem;
     --success: 142 71% 45%;
-    --warning: 25 95% 53%;
+    --warning: 38 92% 50%;
+    --danger: 0 84% 60%;
   }
 }
 
 @layer utilities {
   .glass-panel {
-    background: rgba(15, 23, 42, 0.6);
+    background: rgba(10, 15, 30, 0.7);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(148, 163, 184, 0.1);
   }
@@ -41,6 +42,21 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  .support-high {
+    background: hsl(142 71% 45% / 0.2);
+    border-color: hsl(142 71% 45%);
+  }
+
+  .support-medium {
+    background: hsl(38 92% 50% / 0.2);
+    border-color: hsl(38 92% 50%);
+  }
+
+  .support-low {
+    background: hsl(0 84% 60% / 0.2);
+    border-color: hsl(0 84% 60%);
   }
 }
 
