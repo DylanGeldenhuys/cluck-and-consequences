@@ -102,7 +102,7 @@ export function AdvisoryPanel({ house }: AdvisoryPanelProps) {
               <DollarSign className="h-4 w-4 text-primary" />
               <p className="text-sm text-muted-foreground">Profit Delta</p>
             </div>
-            <p className="text-3xl font-bold text-primary">R {topRec.profitDelta}</p>
+            <p className="text-3xl font-bold text-primary">R {topRec.profitDelta.toFixed(2)}</p>
           </div>
 
           <div className="p-4 rounded-lg bg-card/50 border border-border">

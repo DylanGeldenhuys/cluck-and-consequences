@@ -65,7 +65,7 @@ export default function HouseDetail() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <KpiCard
               title="Daily Profit"
-              value={`R ${currentMetrics.profit.toFixed(0)}`}
+              value={`R ${currentMetrics.profit.toFixed(2)}`}
               change={{ value: profitImprovement, label: 'improvement' }}
               icon={DollarSign}
               variant="success"

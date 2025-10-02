@@ -45,7 +45,7 @@ export function AdvisoryPanel({ house }: AdvisoryPanelProps) {
           </div>
           <div>
             <p className="text-sm text-muted-foreground">Profit Delta</p>
-            <p className="text-2xl font-bold text-primary">R {topRec.profitDelta}</p>
+            <p className="text-2xl font-bold text-primary">R {topRec.profitDelta.toFixed(2)}</p>
           </div>
           <div>
             <p className="text-sm text-muted-foreground">Confidence</p>

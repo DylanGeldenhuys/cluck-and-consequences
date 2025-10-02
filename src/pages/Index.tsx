@@ -54,7 +54,7 @@ export default function Index() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <KpiCard
             title="Daily Profit"
-            value={`R ${totalDailyProfit.toFixed(0)}`}
+            value={`R ${totalDailyProfit.toFixed(2)}`}
             change={{ value: 17.6, label: 'vs last cycle' }}
             icon={DollarSign}
             variant="success"
