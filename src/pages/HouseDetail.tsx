@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { ArrowLeft, DollarSign, TrendingUp, Activity, Skull } from 'lucide-react';
+import { ArrowLeft, DollarSign, TrendingUp, Activity, Skull, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -93,9 +93,22 @@ export default function HouseDetail() {
 
         {/* Tabs */}
         <Tabs defaultValue="operations" className="space-y-6">
-          <TabsList className="glass-panel">
-            <TabsTrigger value="operations">Operations</TabsTrigger>
-            <TabsTrigger value="advisory">Advisory</TabsTrigger>
+          <TabsList className="glass-panel p-2 h-16 gap-2">
+            <TabsTrigger 
+              value="operations"
+              className="h-full px-6 text-base font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500 data-[state=active]:to-orange-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-orange-500/50 hover:bg-muted/50 transition-all duration-300"
+            >
+              <Activity className="mr-2 h-5 w-5" />
+              Operations
+            </TabsTrigger>
+            <TabsTrigger 
+              value="advisory"
+              className="relative h-full px-6 text-base font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500 data-[state=active]:to-orange-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-orange-500/50 hover:bg-muted/50 transition-all duration-300 before:absolute before:inset-0 before:rounded-md before:p-[2px] before:bg-gradient-to-r before:from-orange-400 before:to-yellow-400 before:-z-10 before:opacity-50 data-[state=active]:before:opacity-100 data-[state=active]:before:animate-pulse"
+            >
+              <Sparkles className="mr-2 h-5 w-5" />
+              Advisory
+              <Badge className="ml-2 bg-orange-600/80 text-white text-xs border-0">AI</Badge>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="operations" className="space-y-6">
