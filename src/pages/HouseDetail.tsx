@@ -32,7 +32,22 @@ export default function HouseDetail() {
 
   const currentWeek = Math.ceil(house.currentDay / 7);
   const currentMetrics = weeklyMetrics.find(m => m.week === currentWeek);
-  const profitImprovement = ((1 + currentWeek * 0.03) - 1) * 100;
+  const prevWeekMetrics = weeklyMetrics.find(m => m.week === currentWeek - 1);
+  
+  // Calculate week-over-week changes
+  const profitChange = prevWeekMetrics && currentMetrics
+    ? ((currentMetrics.profit - prevWeekMetrics.profit) / prevWeekMetrics.profit * 100)
+    : 0;
+  const pefChange = prevWeekMetrics && currentMetrics
+    ? ((currentMetrics.pef - prevWeekMetrics.pef) / prevWeekMetrics.pef * 100)
+    : 0;
+  const fcrChange = prevWeekMetrics && currentMetrics
+    ? ((currentMetrics.fcr - prevWeekMetrics.fcr) / prevWeekMetrics.fcr * 100)
+    : 0;
+  const mortalityChange = prevWeekMetrics && currentMetrics
+    ? ((currentMetrics.mortality - prevWeekMetrics.mortality) / prevWeekMetrics.mortality * 100)
+    : 0;
+  
   const modelRunDate = getModelRunDate(house);
 
   return (
@@ -66,25 +81,28 @@ export default function HouseDetail() {
             <KpiCard
               title="Daily Profit"
               value={`R ${currentMetrics.profit.toFixed(2)}`}
-              change={{ value: profitImprovement, label: 'improvement' }}
+              change={{ value: profitChange, label: 'vs last week' }}
               icon={DollarSign}
               variant="success"
             />
             <KpiCard
               title="PEF"
               value={currentMetrics.pef.toFixed(1)}
+              change={{ value: pefChange, label: 'vs last week' }}
               icon={TrendingUp}
               variant="success"
             />
             <KpiCard
               title="FCR"
               value={currentMetrics.fcr.toFixed(2)}
+              change={{ value: fcrChange, label: 'vs last week' }}
               icon={Activity}
               variant="success"
             />
             <KpiCard
               title="Mortality"
-              value={`${currentMetrics.mortality.toFixed(2)}%`}
+              value={`${currentMetrics.mortality.toFixed(1)}%`}
+              change={{ value: mortalityChange, label: 'vs last week' }}
               icon={Skull}
               variant={currentMetrics.mortality > 0.15 ? 'danger' : 'default'}
             />

@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { KpiCard } from '@/components/KpiCard';
 import { HouseCard } from '@/components/HouseCard';
+import { FarmHealthDial } from '@/components/FarmHealthDial';
 import { getAppState } from '@/lib/mock/state';
 
 export default function Index() {
@@ -24,6 +25,10 @@ export default function Index() {
   const avgFcr = Array.from(state.weeklyMetrics.values())
     .flat()
     .reduce((sum, m) => sum + m.fcr, 0) / Array.from(state.weeklyMetrics.values()).flat().length;
+
+  const avgMortality = Array.from(state.weeklyMetrics.values())
+    .flat()
+    .reduce((sum, m) => sum + m.mortality, 0) / Array.from(state.weeklyMetrics.values()).flat().length;
 
   const criticalAlerts = Array.from(state.anomalies.values())
     .flat()
@@ -69,7 +74,7 @@ export default function Index() {
           <KpiCard
             title="Avg FCR"
             value={avgFcr.toFixed(2)}
-            change={{ value: 6.3, label: 'improvement' }}
+            change={{ value: -6.3, label: 'improvement' }}
             icon={Activity}
             variant="success"
           />
@@ -97,31 +102,40 @@ export default function Index() {
             </div>
           </div>
 
-          {/* Fleet Alerts Panel */}
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Critical Alerts</h2>
-            <Card className="glass-panel p-6">
-              <div className="space-y-4">
-                {topAnomalies.length === 0 ? (
-                  <p className="text-muted-foreground text-center py-8">No critical alerts</p>
-                ) : (
-                  topAnomalies.map(anomaly => (
-                    <div
-                      key={anomaly.id}
-                      className="p-4 rounded-lg bg-card/50 border border-destructive/20 cursor-pointer hover:bg-card transition-colors"
-                      onClick={() => navigate(`/house/${anomaly.houseId}`)}
-                    >
-                      <div className="flex items-start justify-between mb-2">
-                        <Badge variant="destructive">{anomaly.houseId}</Badge>
-                        <span className="text-xs text-muted-foreground">Day {anomaly.day}</span>
+          {/* Fleet Health & Alerts Panel */}
+          <div className="space-y-6">
+            <FarmHealthDial 
+              pef={avgPef}
+              fcr={avgFcr}
+              mortality={avgMortality}
+              alertCount={criticalAlerts}
+            />
+            
+            <div>
+              <h2 className="text-2xl font-semibold mb-4">Critical Alerts</h2>
+              <Card className="glass-panel p-6">
+                <div className="space-y-4">
+                  {topAnomalies.length === 0 ? (
+                    <p className="text-muted-foreground text-center py-8">No critical alerts</p>
+                  ) : (
+                    topAnomalies.map(anomaly => (
+                      <div
+                        key={anomaly.id}
+                        className="p-4 rounded-lg bg-card/50 border border-destructive/20 cursor-pointer hover:bg-card transition-colors"
+                        onClick={() => navigate(`/house/${anomaly.houseId}`)}
+                      >
+                        <div className="flex items-start justify-between mb-2">
+                          <Badge variant="destructive">{anomaly.houseId}</Badge>
+                          <span className="text-xs text-muted-foreground">Day {anomaly.day}</span>
+                        </div>
+                        <p className="text-sm font-semibold mb-1">{anomaly.metric}</p>
+                        <p className="text-xs text-muted-foreground">{anomaly.message}</p>
                       </div>
-                      <p className="text-sm font-semibold mb-1">{anomaly.metric}</p>
-                      <p className="text-xs text-muted-foreground">{anomaly.message}</p>
-                    </div>
-                  ))
-                )}
-              </div>
-            </Card>
+                    ))
+                  )}
+                </div>
+              </Card>
+            </div>
           </div>
         </div>
       </main>

@@ -53,10 +53,10 @@ export default function Reports() {
 
   // Savings breakdown
   const savingsData = [
-    { category: 'Feed Optimization', value: totalProfitImprovement * 0.35, color: 'hsl(var(--success))' },
-    { category: 'Energy Efficiency', value: totalProfitImprovement * 0.28, color: 'hsl(var(--primary))' },
-    { category: 'Mortality Reduction', value: totalProfitImprovement * 0.22, color: 'hsl(var(--accent))' },
-    { category: 'Other', value: totalProfitImprovement * 0.15, color: 'hsl(var(--warning))' },
+    { category: 'Feed Optimization', value: totalProfitImprovement * 0.35, fill: 'hsl(142, 71%, 45%)' },
+    { category: 'Energy Efficiency', value: totalProfitImprovement * 0.28, fill: 'hsl(17, 88%, 60%)' },
+    { category: 'Mortality Reduction', value: totalProfitImprovement * 0.22, fill: 'hsl(188, 94%, 43%)' },
+    { category: 'Other', value: totalProfitImprovement * 0.15, fill: 'hsl(38, 92%, 50%)' },
   ];
 
   // Top improvements by house
@@ -98,7 +98,7 @@ export default function Reports() {
               <TrendingUp className="w-5 h-5 text-success" />
               <h3 className="font-semibold">Total Profit Improvement</h3>
             </div>
-            <p className="text-3xl font-bold text-success">R {totalProfitImprovement.toFixed(0)}</p>
+            <p className="text-3xl font-bold text-success">R {totalProfitImprovement.toFixed(2)}</p>
             <p className="text-sm text-muted-foreground mt-1">+17.6% vs baseline cycle</p>
           </Card>
 
@@ -173,21 +173,30 @@ export default function Reports() {
             <ResponsiveContainer width="100%" height={350}>
               <BarChart data={savingsData} layout="vertical">
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis type="number" stroke="hsl(var(--muted-foreground))" label={{ value: 'Savings (R)', position: 'bottom' }} />
-                <YAxis type="category" dataKey="category" stroke="hsl(var(--muted-foreground))" width={150} />
+                <XAxis 
+                  type="number" 
+                  stroke="hsl(var(--foreground))" 
+                  tick={{ fill: 'hsl(var(--foreground))' }}
+                />
+                <YAxis 
+                  type="category" 
+                  dataKey="category" 
+                  stroke="hsl(var(--foreground))" 
+                  tick={{ fill: 'hsl(var(--foreground))' }}
+                  width={180} 
+                />
                 <Tooltip 
                   contentStyle={{ 
-                    backgroundColor: 'hsl(var(--popover))', 
+                    backgroundColor: 'hsl(var(--card))', 
                     border: '1px solid hsl(var(--border))',
-                    borderRadius: '8px'
+                    borderRadius: '8px',
+                    color: 'hsl(var(--foreground))'
                   }}
-                  formatter={(value: number) => [`R ${value.toFixed(0)}`, 'Savings']}
+                  labelStyle={{ color: 'hsl(var(--foreground))' }}
+                  itemStyle={{ color: 'hsl(var(--foreground))' }}
+                  formatter={(value: number) => [`R ${value.toFixed(2)}`, 'Savings']}
                 />
-                <Bar dataKey="value" radius={[0, 8, 8, 0]}>
-                  {savingsData.map((entry, index) => (
-                    <Bar key={index} dataKey="value" fill={entry.color} />
-                  ))}
-                </Bar>
+                <Bar dataKey="value" radius={[0, 8, 8, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </Card>
@@ -206,7 +215,7 @@ export default function Reports() {
                     <span className="text-2xl font-bold text-muted-foreground w-8">{index + 1}</span>
                     <div>
                       <p className="font-semibold">{house.id}</p>
-                      <p className="text-sm text-muted-foreground">R {house.profit.toFixed(0)} daily</p>
+                      <p className="text-sm text-muted-foreground">R {house.profit.toFixed(2)} daily</p>
                     </div>
                   </div>
                   <div className="text-right">

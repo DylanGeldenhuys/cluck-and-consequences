@@ -34,18 +34,18 @@ export function AppSidebar() {
     <Sidebar className="border-r border-border glass-panel">
       <div className="p-4 border-b border-border">
         <NavLink to="/">
-          <div className="w-full py-2 px-3 rounded-lg flex items-center justify-center hover:bg-primary/10 border-2 border-primary/30 hover:border-primary transition-all cursor-pointer group">
+          <div className="w-full py-4 px-4 rounded-lg flex items-center justify-center bg-primary/15 hover:bg-primary/20 border-2 border-primary/40 hover:border-primary shadow-lg shadow-primary/20 transition-all cursor-pointer group">
             {!isCollapsed ? (
               <img 
                 src={optibroilerLogo} 
                 alt="OptiBroiler" 
-                className="h-12 w-auto object-contain"
+                className="h-16 w-auto object-contain"
               />
             ) : (
               <img 
                 src={optibroilerLogo} 
                 alt="OB" 
-                className="h-10 w-10 object-contain"
+                className="h-12 w-12 object-contain"
               />
             )}
           </div>
