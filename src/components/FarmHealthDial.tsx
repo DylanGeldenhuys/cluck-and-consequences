@@ -44,16 +44,16 @@ export function FarmHealthDial({ pef, fcr, mortality, alertCount }: FarmHealthDi
   return (
     <Card className="glass-panel p-6">
       <h2 className="text-2xl font-semibold mb-4">Overall Farm Health</h2>
-      <ResponsiveContainer width="100%" height={280}>
+      <ResponsiveContainer width="100%" height={240}>
         <RadialBarChart 
           cx="50%" 
           cy="50%" 
-          innerRadius="60%" 
+          innerRadius="70%" 
           outerRadius="90%" 
-          barSize={20} 
+          barSize={25} 
           data={data}
-          startAngle={180}
-          endAngle={0}
+          startAngle={90}
+          endAngle={-270}
         >
           <PolarAngleAxis
             type="number"
@@ -69,7 +69,7 @@ export function FarmHealthDial({ pef, fcr, mortality, alertCount }: FarmHealthDi
           />
           <text
             x="50%"
-            y="45%"
+            y="48%"
             textAnchor="middle"
             dominantBaseline="middle"
             className="fill-foreground text-5xl font-bold"
@@ -78,33 +78,15 @@ export function FarmHealthDial({ pef, fcr, mortality, alertCount }: FarmHealthDi
           </text>
           <text
             x="50%"
-            y="60%"
+            y="62%"
             textAnchor="middle"
             dominantBaseline="middle"
-            className="fill-muted-foreground text-sm"
+            className="fill-muted-foreground text-sm font-medium"
           >
             {status}
           </text>
         </RadialBarChart>
       </ResponsiveContainer>
-      <div className="grid grid-cols-2 gap-3 mt-4 text-sm">
-        <div className="p-2 rounded-lg bg-card/50">
-          <p className="text-muted-foreground text-xs">PEF Contribution</p>
-          <p className="font-semibold text-primary">{(pefScore / 0.3).toFixed(0)}%</p>
-        </div>
-        <div className="p-2 rounded-lg bg-card/50">
-          <p className="text-muted-foreground text-xs">FCR Contribution</p>
-          <p className="font-semibold text-success">{(fcrScore / 0.25).toFixed(0)}%</p>
-        </div>
-        <div className="p-2 rounded-lg bg-card/50">
-          <p className="text-muted-foreground text-xs">Mortality Impact</p>
-          <p className="font-semibold text-accent">{(mortalityScore / 0.25).toFixed(0)}%</p>
-        </div>
-        <div className="p-2 rounded-lg bg-card/50">
-          <p className="text-muted-foreground text-xs">Alert Impact</p>
-          <p className="font-semibold text-warning">{(alertScore / 0.2).toFixed(0)}%</p>
-        </div>
-      </div>
     </Card>
   );
 }

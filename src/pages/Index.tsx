@@ -34,11 +34,19 @@ export default function Index() {
     .flat()
     .filter(a => a.severity === 'high').length;
 
+  // Get top 3 anomalies (prioritize by severity, then by timestamp)
   const topAnomalies = Array.from(state.anomalies.values())
     .flat()
-    .filter(a => a.severity === 'high')
-    .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
-    .slice(0, 5);
+    .sort((a, b) => {
+      // Sort by severity first (high > medium > low)
+      const severityOrder = { high: 3, medium: 2, low: 1 };
+      if (severityOrder[b.severity] !== severityOrder[a.severity]) {
+        return severityOrder[b.severity] - severityOrder[a.severity];
+      }
+      // Then by timestamp
+      return b.timestamp.getTime() - a.timestamp.getTime();
+    })
+    .slice(0, 3);
 
   return (
     <div className="min-h-screen bg-background">
@@ -116,7 +124,7 @@ export default function Index() {
               <Card className="glass-panel p-6">
                 <div className="space-y-4">
                   {topAnomalies.length === 0 ? (
-                    <p className="text-muted-foreground text-center py-8">No critical alerts</p>
+                    <p className="text-muted-foreground text-center py-8">No alerts</p>
                   ) : (
                     topAnomalies.map(anomaly => (
                       <div
@@ -125,7 +133,9 @@ export default function Index() {
                         onClick={() => navigate(`/house/${anomaly.houseId}`)}
                       >
                         <div className="flex items-start justify-between mb-2">
-                          <Badge variant="destructive">{anomaly.houseId}</Badge>
+                    <Badge variant={anomaly.severity === 'high' ? 'destructive' : anomaly.severity === 'medium' ? 'default' : 'secondary'}>
+                      {anomaly.houseId}
+                    </Badge>
                           <span className="text-xs text-muted-foreground">Day {anomaly.day}</span>
                         </div>
                         <p className="text-sm font-semibold mb-1">{anomaly.metric}</p>
